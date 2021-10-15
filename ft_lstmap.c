@@ -1,29 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: leldiss <leldiss@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/13 22:52:04 by leldiss           #+#    #+#             */
-/*   Updated: 2021/10/13 22:52:04 by leldiss          ###   ########.fr       */
+/*   Created: 2021/10/12 22:59:40 by leldiss           #+#    #+#             */
+/*   Updated: 2021/10/12 22:59:40 by leldiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_calloc(size_t num, size_t size)
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	void	*arr;
+	t_list	*newlst;
+	t_list	*swaplst;
 
-	if (!size || !num)
+	newlst = NULL;
+	while (lst != NULL)
 	{
-		size = 1;
-		num = 1;
+		swaplst = ft_lstnew(f(lst->content));
+		if (!swaplst)
+			break ;
+		ft_lstadd_front(&newlst, swaplst);
+		lst = lst->next;
 	}
-	arr = malloc(size * num);
-	if (!arr)
+	if (!swaplst)
+	{
+		while (!newlst)
+		{
+			del(newlst->content);
+			swaplst = newlst;
+			newlst = newlst->next;
+			free(swaplst);
+		}
 		return (NULL);
-	ft_bzero(arr, size * num);
-	return (arr);
+	}
+	return (newlst);
 }

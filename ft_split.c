@@ -12,76 +12,98 @@
 
 #include "libft.h"
 
-char	**free_null(char **str)
+char	**ft_tabfree(char	**tab)
 {
-	int	i;
-
-	i = 0;
-	while (str[i])
-		free(str[i++]);
-	free(str);
-	return (NULL);
-}
-
-int	count_word(char const *s, char c)
-{
-	int	i;
-	int	counter;
-
-	i = 0;
-	counter = 0;
-	while (s[i] != '\0')
-	{
-		if (s[i] == c)
-			counter++;
-		i++;
-	}
-	return (counter);
-}
-
-char	*ft_strndup(const char *s1, size_t n)
-{
-	char	*str;
 	size_t	i;
 
 	i = 0;
-	str = (char *)malloc(sizeof(char) * (n + 1));
-	if (str == NULL)
-		return (NULL);
-	while (i < n)
+	while (tab[i])
 	{
-		str[i] = s1[i];
+		free(tab[i]);
 		i++;
 	}
-	str[i] = '\0';
-	return (str);
+	free(tab);
+	return (NULL);
+}
+
+size_t	ft_row(char const *s, char c)
+{
+	size_t	i;
+	size_t	row;
+
+	i = 0;
+	row = 0;
+	while (s[i])
+	{
+		if ((s[i] != c && s[i + 1] && s[i + 1] == c)
+			|| (s[i] != c && !s[i + 1]))
+			row++;
+		i++;
+	}
+	return (row);
+}
+
+char	**tabmalloc(char const *s, char c)
+{
+	char	**tab;
+	size_t	i;
+	size_t	j;
+	size_t	len;
+
+	i = 0;
+	len = ft_row(s, c);
+	tab = malloc(sizeof(char *) * (len + 1));
+	if (tab == NULL)
+		return (NULL);
+	while (i++ < len)
+	{
+		j = 0;
+		while (*s == c)
+			s++;
+		while (*s != c && *s != 0)
+		{
+			s++;
+			j++;
+		}
+		tab[i - 1] = malloc(sizeof(char) * (j + 1));
+		if (tab[i - 1] == NULL)
+			return (ft_tabfree(tab));
+	}
+	return (tab);
+}
+
+char	**tabfill(char const *s, char c, char **tab)
+{
+	size_t	i;
+	size_t	j;
+	size_t	k;
+
+	i = 0;
+	k = 0;
+	while (s[i])
+	{
+		j = 0;
+		while (s[i] == c)
+			i++;
+		if (!s[i])
+			break ;
+		while (s[i] != c && s[i] != 0)
+			tab[k][j++] = s[i++];
+		tab[k][j] = 0;
+		k++;
+	}
+	tab[k] = NULL;
+	return (tab);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	char	**str;
-	int		i;
-	int		j;
-	int		k;
+	char	**tab;
 
-	i = 0;
-	j = 0;
-	if (s[i] == '\0')
+	if (!s)
 		return (NULL);
-	str = (char **)malloc(sizeof(char *) * (count_word(s, c) + 1));
-	if (str == NULL)
+	tab = tabmalloc(s, c);
+	if (!tab)
 		return (NULL);
-	while (s[j] != '\0')
-	{
-		k = 0;
-		while (s[j] != '\0' && s[j] != c)
-		{
-			k++;
-			j++;
-		}
-		str[i] = ft_strndup(&s[j - k], k);
-		i++;
-		j++;
-	}
-	return (str);
+	return (tabfill(s, c, tab));
 }

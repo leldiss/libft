@@ -19,7 +19,12 @@ SRC = ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c \
       ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_substr.c ft_tolower.c ft_toupper.c \
       ft_memchr.c ft_memset.c ft_split.c ft_striteri.c ft_strtrim.c ft_calloc.c
 
+SRC_BONUS = ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c \
+			ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c
+
 OBJ = $(SRC:.c=.o)
+
+OBJ_BONUS = $(SRC_BONUS:.c=.o)
 
 INCLUDES = ./
 
@@ -32,19 +37,20 @@ all : $(NAME)
 $(NAME):$(OBJ)
 	ar rc $(NAME) $(OBJ)
 	ranlib $(NAME)
+
+bonus: $(NAME) $(OBJ_BONUS)
+	ar rc $(NAME) $(OBJ) $(OBJ_BONUS)
+	ranlib $(NAME)
+
 %.o:%.c
 	$(CC) $(FLAGS) -I $(INCLUDES) -c $< -o $@
 
 clean:
-	rm -f $(OBJ)
+	rm -f $(OBJ) $(OBJ_BONUS)
 
 fclean:clean
 	rm -f $(NAME)
 
 re:fclean all
-
-so:
-	$(CC) -nostartfiles -fPIC $(CFLAGS) $(SRC)
-	gcc -nostartfiles -shared -o libft.so $(OBJ)
 
 .PHONY = all, clean, fclean, re

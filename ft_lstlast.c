@@ -1,29 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: leldiss <leldiss@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/13 22:52:04 by leldiss           #+#    #+#             */
-/*   Updated: 2021/10/13 22:52:04 by leldiss          ###   ########.fr       */
+/*   Created: 2021/10/12 22:51:35 by leldiss           #+#    #+#             */
+/*   Updated: 2021/10/12 22:51:35 by leldiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_calloc(size_t num, size_t size)
+t_list	*ft_lstlast(t_list *lst)
 {
-	void	*arr;
-
-	if (!size || !num)
-	{
-		size = 1;
-		num = 1;
-	}
-	arr = malloc(size * num);
-	if (!arr)
+	if (!lst)
 		return (NULL);
-	ft_bzero(arr, size * num);
-	return (arr);
+	while (lst->next != NULL)
+		lst = lst->next;
+	return (lst);
 }
