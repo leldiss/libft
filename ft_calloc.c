@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: leldiss <leldiss@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/13 22:52:04 by leldiss           #+#    #+#             */
-/*   Updated: 2021/10/13 22:52:04 by leldiss          ###   ########.fr       */
+/*   Created: 2021/10/15 16:05:55 by leldiss           #+#    #+#             */
+/*   Updated: 2021/10/15 16:05:55 by leldiss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	*ft_calloc(size_t num, size_t size)
 
 	if (!size || !num)
 	{
-		size = 1;
 		num = 1;
+		size = 1;
 	}
-	arr = malloc(size * num);
+	arr = malloc(num * size);
 	if (!arr)
 		return (NULL);
 	ft_bzero(arr, size * num);
