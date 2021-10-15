@@ -12,6 +12,12 @@
 
 NAME = libft.a
 
+CC = gcc
+
+CFLAGS = -Wall -Wextra -Werror
+
+INCLD = ./
+
 SRC = ft_calloc.c ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c \
       ft_isprint.c ft_itoa.c ft_memcmp.c ft_memcpy.c ft_memmove.c ft_putchar_fd.c \
       ft_putendl_fd.c ft_putnbr_fd.c ft_putstr_fd.c ft_strchr.c ft_strdup.c \
@@ -22,35 +28,28 @@ SRC = ft_calloc.c ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft
 SRC_BONUS = ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c \
 			ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c
 
-OBJ = $(SRC:.c=.o)
-
 OBJ_BONUS = $(SRC_BONUS:.c=.o)
 
-INCLUDES = ./
+OBJ = $(SRC:.c=.o)
 
-FLAGS = -Wall -Wextra -Werror
-
-CC = gcc
-
-all : $(NAME)
-
-$(NAME):$(OBJ)
-	ar rc $(NAME) $(OBJ)
-	ranlib $(NAME)
+all:	$(NAME)
 
 bonus: $(NAME) $(OBJ_BONUS)
 	ar rc $(NAME) $(OBJ) $(OBJ_BONUS)
 	ranlib $(NAME)
 
-%.o:%.c
-	$(CC) $(FLAGS) -I $(INCLUDES) -c $< -o $@
+$(NAME):	$(OBJ)
+	ar rc $(NAME) $(OBJ)
+	ranlib $(NAME)
+
+.c.o:
+	$(CC) $(CFLAGS) -I $(INCLD) -c $< -o $(<:.c=.o)
 
 clean:
-	rm -f $(OBJ) $(OBJ_BONUS)
+	rm -rf $(OBJ) $(OBJ_BONUS)
+fclean: clean
+	rm -rf $(NAME)
 
-fclean:clean
-	rm -f $(NAME)
-
-re:fclean all
+re: fclean  all
 
 .PHONY = all, clean, fclean, re
