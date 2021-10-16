@@ -33,13 +33,12 @@ OBJ_BONUS = $(SRC_BONUS:.c=.o)
 OBJ = $(SRC:.c=.o)
 
 all:	$(NAME)
+$(NAME):	$(OBJ)
+	ar rc $(NAME) $(OBJ)
+	ranlib $(NAME)
 
 bonus: $(NAME) $(OBJ_BONUS)
 	ar rc $(NAME) $(OBJ) $(OBJ_BONUS)
-	ranlib $(NAME)
-
-$(NAME):	$(OBJ)
-	ar rc $(NAME) $(OBJ)
 	ranlib $(NAME)
 
 .c.o:
