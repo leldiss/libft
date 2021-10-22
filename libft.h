@@ -15,8 +15,6 @@
 
 # include <stdlib.h>
 # include <unistd.h>
-# include <string.h>
-# include <stddef.h>
 
 typedef struct s_list
 {
@@ -27,7 +25,7 @@ typedef struct s_list
 int		ft_isalnum(int c);
 int		ft_isalpha(int c);
 int		ft_isascii(int c);
-int		ft_atoi(char *str);
+int		ft_atoi(const char *str);
 int		ft_isdigit(int c);
 int		ft_isprint(int c);
 void	*ft_calloc(size_t num, size_t size);
@@ -56,7 +54,7 @@ void	*ft_memchr(const void *s, int c, size_t n);
 void	*ft_memset(void *s, int c, size_t n);
 char	**ft_split(char const *s, char c);
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));
-size_t	ft_strlcpy(char *dst, char *src, size_t size);
+size_t	ft_strlcpy(char *dest, const char *src, size_t size);
 char	*ft_strtrim(char const *s1, char const *set);
 t_list	*ft_lstnew(void *content);
 void	ft_lstadd_front(t_list **lst, t_list *new);

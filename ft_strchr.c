@@ -14,6 +14,7 @@
 
 char	*ft_strchr(char *s, int c)
 {
+	c = c % 256;
 	while (*s != c)
 	{
 		if (*s == '\0')

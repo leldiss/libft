@@ -14,7 +14,7 @@ NAME = libft.a
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror
 
 INCLD = ./
 
@@ -33,6 +33,7 @@ OBJ_BONUS = $(SRC_BONUS:.c=.o)
 OBJ = $(SRC:.c=.o)
 
 all:	$(NAME)
+
 $(NAME):	$(OBJ)
 	ar rc $(NAME) $(OBJ)
 	ranlib $(NAME)
@@ -41,11 +42,12 @@ bonus: $(NAME) $(OBJ_BONUS)
 	ar rc $(NAME) $(OBJ) $(OBJ_BONUS)
 	ranlib $(NAME)
 
-.c.o:
-	$(CC) $(CFLAGS) -I $(INCLD) -c $< -o $(<:.c=.o)
+%.o : %.c libft.h
+	$(CC) $(FLAGS) -I $(INCLD) -c $< -o $(<:.c=.o)
 
 clean:
 	rm -rf $(OBJ) $(OBJ_BONUS)
+
 fclean: clean
 	rm -rf $(NAME)
 
